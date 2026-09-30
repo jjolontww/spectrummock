@@ -1,0 +1,12 @@
+{
+  "name": "hub-spectrum-vivienda",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Prototipo estatico exportado desde Claude Design (Spectrum Web.dc.html). Servido tal cual, sin build.",
+  "scripts": {
+    "dev": "serve -l 4321 ."
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
