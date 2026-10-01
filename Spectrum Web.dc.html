@@ -1552,7 +1552,7 @@ input{font-family:inherit}
     <img draggable="false" src="{{ lgImgA }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:{{ lgOpA }}; transform:{{ lgScA }}; transition:opacity .6s ease, transform 1.4s cubic-bezier(.2,.8,.2,1)">
     <div style="position:absolute; inset:0; background:{{ lgL.grad }}"></div>
     <div style="position:absolute; top:8px; left:0; right:0; display:{{ lgL.handle }}; justify-content:center"><span style="width:40px; height:5px; border-radius:5px; background:rgba(255,255,255,.7)"></span></div>
-    <div style="position:relative; height:100%; box-sizing:border-box; padding:{{ lgL.visPad }}; display:flex; flex-direction:column; justify-content:space-between; gap:20px">
+    <div style="position:relative; height:100%; box-sizing:border-box; padding:{{ lgL.visPad }}; display:{{ lgL.visTxt }}; flex-direction:column; justify-content:space-between; gap:20px">
       <img src="logo-spectrum-white.svg" alt="Spectrum" style="height:24px; width:auto; align-self:flex-start; display:{{ lgL.logo }}">
       <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto">
         <span style="font-size:11px; letter-spacing:1.4px; font-weight:800; color:#2DB3A6">{{ lgKicker }}</span>
@@ -1569,9 +1569,34 @@ input{font-family:inherit}
       </div>
     </div>
   </div>
+  <div style="position:absolute; top:10px; left:0; right:0; z-index:4; display:{{ lgL.mHandle }}; justify-content:center; pointer-events:none"><span style="width:40px; height:5px; border-radius:5px; background:#CCDBE0"></span></div>
   <div style="flex:1 1 auto; min-height:0; min-width:0; overflow-y:auto; scrollbar-width:none; padding:{{ lgL.formPad }}; box-sizing:border-box; display:flex; flex-direction:column; justify-content:{{ lgL.just }}">
     <sc-if value="{{ lgIsLogin }}" hint-placeholder-val="{{ true }}">
     <form onSubmit="{{ lgSubmit }}" style="display:flex; flex-direction:column; gap:18px; width:100%; max-width:400px; margin:0 auto">
+      <sc-if value="{{ lgMob }}" hint-placeholder-val="{{ true }}">
+      <div style="width:100%; box-sizing:border-box; background:#002E3D; color:#fff; border-radius:22px; padding:18px 18px 16px; display:flex; flex-direction:column; gap:14px">
+        <div style="display:flex; flex-direction:column; gap:6px">
+          <span style="font-size:11px; letter-spacing:1.4px; font-weight:800; color:#2DB3A6">{{ lgKicker }}</span>
+          <span style="font-size:20px; font-weight:800; line-height:1.15; letter-spacing:-.3px; text-wrap:balance">{{ lgTitle }}</span>
+        </div>
+        <div onClick="{{ lgNext }}" style="position:relative; height:58px; padding-top:14px; border-top:1px solid rgba(255,255,255,.14); cursor:pointer">
+          <sc-for list="{{ lgSlides }}" as="sl" hint-placeholder-count="1">
+            <div style="position:absolute; left:0; right:0; top:14px; display:flex; align-items:center; gap:12px; opacity:{{ sl.op }}; transform:{{ sl.t }}; transition:opacity .45s ease, transform .45s ease">
+              <span style="width:44px; height:44px; flex:0 0 44px; border-radius:13px; background:rgba(45,179,166,.16); color:#2DB3A6; display:flex; align-items:center; justify-content:center">{{ sl.icon }}</span>
+              <div style="display:flex; flex-direction:column; gap:2px; min-width:0">
+                <span style="font-size:16px; font-weight:800; line-height:1.2">{{ sl.label }}</span>
+                <span style="font-size:13px; font-weight:600; line-height:1.3; color:#D5E6EA">{{ sl.desc }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; gap:5px">
+          <sc-for list="{{ lgDots }}" as="dt" hint-placeholder-count="6">
+            <button type="button" onClick="{{ dt.go }}" aria-label="Beneficio" style="border:0; padding:0; width:{{ dt.w }}; height:6px; border-radius:6px; background:{{ dt.bg }}; transition:width .3s, background .3s; min-height:6px"></button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
       <div style="display:flex; flex-direction:column; gap:6px">
         <span style="font-size:{{ lgL.h1 }}; font-weight:800; letter-spacing:-.5px; line-height:1.1">Iniciar sesión</span>
         <span style="font-size:15px; font-weight:600; color:#337184; line-height:1.4">Accede con el correo registrado en Spectrum.</span>
@@ -2055,7 +2080,7 @@ const DEF_D={ds:0,dUso:null,dWhen:null,dCuota:8000,dBeds:null,dBaths:null,dM2:nu
 
 class Component extends DCLogic {
   loadI18n(){if(window.SpectrumI18n)return Promise.resolve();if(!this._i18nWait){this._i18nWait=new Promise(r=>{let n=0;const t=setInterval(()=>{if(window.SpectrumI18n||++n>40){clearInterval(t);r();}},50);});}return this._i18nWait;if(this._i18nP)return this._i18nP;this._i18nP=new Promise(r=>{const sc=document.createElement('script');sc.src='i18n-en.js';sc.onload=r;sc.onerror=r;document.head.appendChild(sc);});return this._i18nP;}
-  wvRef=React.createRef();state={lang:'es',login:false,lgRole:'cli',lgStep:'login',lgEmail:'',lgPass:'',lgShow:false,lgCode:'',lgCodeF:false,lgN1:'',lgN2:'',lgResent:false,cmpMode:'proj',cmpM:[],lm:'proj',avT:0,avM:'',avSel:null,avFrom:'list',avPrev:'home',wv:null,wvHid:false,pgVid:null,prog:'sost',pgFaq:0,pgF:{n:'',emp:'',e:'',t:''},pgSent:false,view:this.props.startView??'home',prev:'home',pid:'pp',typo:0,cur:'GTQ',heroI:0,q:'',qFocus:false,f:{...DEF_F},sort:'entrega',filtersOpen:false,compare:[],pop:null,toast:null,acc:0,waMenu:false,quiz:false,qs:0,qP:null,qT:null,qW:null,qPay:null,qSel:null,calcPrice:1100000,eng:10,years:25,menu:false,disc:false,...DEF_D,ctry:'GT',cOpen:false,cQ:'',vw:(typeof window!=='undefined'?window.innerWidth:1280),qBeds:null,qBaths:null,qPark:null,qM2:null,qZones:null,hIdx:0,mSel:0,mBeds:0,lbOpen:false,lbSet:'proj',lbI:0,lbM:0};
+  wvRef=React.createRef();state={lang:'es',login:false,lgFi:0,lgRole:'cli',lgStep:'login',lgEmail:'',lgPass:'',lgShow:false,lgCode:'',lgCodeF:false,lgN1:'',lgN2:'',lgResent:false,cmpMode:'proj',cmpM:[],lm:'proj',avT:0,avM:'',avSel:null,avFrom:'list',avPrev:'home',wv:null,wvHid:false,pgVid:null,prog:'sost',pgFaq:0,pgF:{n:'',emp:'',e:'',t:''},pgSent:false,view:this.props.startView??'home',prev:'home',pid:'pp',typo:0,cur:'GTQ',heroI:0,q:'',qFocus:false,f:{...DEF_F},sort:'entrega',filtersOpen:false,compare:[],pop:null,toast:null,acc:0,waMenu:false,quiz:false,qs:0,qP:null,qT:null,qW:null,qPay:null,qSel:null,calcPrice:1100000,eng:10,years:25,menu:false,disc:false,...DEF_D,ctry:'GT',cOpen:false,cQ:'',vw:(typeof window!=='undefined'?window.innerWidth:1280),qBeds:null,qBaths:null,qPark:null,qM2:null,qZones:null,hIdx:0,mSel:0,mBeds:0,lbOpen:false,lbSet:'proj',lbI:0,lbM:0};
   dScore(p){const s=this.state;let sc=0;const why=[];const ty=typos(p);const tyB=ty.filter(t=>t.b===s.dBeds);const cand=tyB.length?tyB:ty;
     const cu=Math.min(...cand.map(t=>t.price*0.9*fac(25)));
     if(cu<=s.dCuota){sc+=25;why.push('Cuota desde '+this.fmt(cu));}else sc+=Math.max(0,25-(cu-s.dCuota)/150);
@@ -2082,8 +2107,9 @@ class Component extends DCLogic {
   slide(ref,dir,full){const el=ref.current;if(!el)return;const w=full?el.clientWidth:el.clientWidth*0.8;const max=el.scrollWidth-el.clientWidth;let t=el.scrollLeft+dir*w;if(full){if(t>max+2)t=0;else if(t<-2)t=max;}el.scrollTo({left:t,behavior:'smooth'});}
   openLb(set,i,m){this.setState(s=>({lbOpen:true,lbSet:set,lbI:i||0,lbM:m!=null?m:s.lbM}));}
   componentDidMount(){try{if(localStorage.getItem('spectrum-lang')==='en'){this.setState({lang:'en'});this.loadI18n().then(()=>setTimeout(()=>window.SpectrumI18n&&window.SpectrumI18n.set('en'),50));}}catch(e){}this._ly=window.scrollY;this._sc=()=>{const y=window.scrollY,dy=y-this._ly;if(Math.abs(dy)<8&&y>60)return;const hid=y>80&&dy>0&&!this.state.waOpen;this._ly=y;if(hid!==!!this.state.hid)this.setState({hid});};window.addEventListener('scroll',this._sc,{passive:true});this._rs=()=>this.setState({vw:window.innerWidth},()=>this.measHs());window.addEventListener('resize',this._rs);setTimeout(()=>this.measHs(),300);this._h=setInterval(()=>this.setState(s=>({heroI:(s.heroI+1)%HERO.length})),4200);
+    this._lgT=setInterval(()=>{const s=this.state;if(!s.login||s.lgStep!=='login'||Date.now()-(this._lgTap||0)<6000)return;this.setState({lgFi:((s.lgFi||0)+1)%6});},2800);
     this._dh=setInterval(()=>{const s=this.state;if(s.view!=='detail'||s.lbOpen||this._hHover||Date.now()-(this._hTouch||0)<7000)return;this.slide(this.heroRef,1,true);},4200);}
-  componentWillUnmount(){clearTimeout(this._wt1);clearTimeout(this._wt2);window.removeEventListener('scroll',this._sc);window.removeEventListener('resize',this._rs);clearInterval(this._h);clearInterval(this._dh);clearTimeout(this._tt);clearTimeout(this._pt);clearTimeout(this._qt);}
+  componentWillUnmount(){clearInterval(this._lgT);clearTimeout(this._wt1);clearTimeout(this._wt2);window.removeEventListener('scroll',this._sc);window.removeEventListener('resize',this._rs);clearInterval(this._h);clearInterval(this._dh);clearTimeout(this._tt);clearTimeout(this._pt);clearTimeout(this._qt);}
   top(){window.scrollTo(0,0);const el=this.scrollRef.current&&this.scrollRef.current.parentElement;if(el)el.scrollTop=0;}
   pgFormRef=React.createRef();
   startWv(d){clearTimeout(this._wt1);clearTimeout(this._wt2);this.setState({wt:{d,ph:0}});
@@ -2166,23 +2192,26 @@ class Component extends DCLogic {
     const emOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.lgEmail.trim()),loginOk=emOk&&s.lgPass.length>=6,n1=s.lgN1;
     const rules=[['Mínimo 8 caracteres',n1.length>=8],['Una letra mayúscula',/[A-Z]/.test(n1)],['Un número',/\d/.test(n1)],['Las contraseñas coinciden',!!n1&&n1===s.lgN2]],rOk=rules.every(r=>r[1]);
     const btn=ok=>({bg:ok?'#0D9084':'#B9CDD3',cur:ok?'pointer':'not-allowed'});
-    const FE=cli?[['Mi expediente','folder'],['Pagos y estado de cuenta','card'],['Procesos administrativos','tasks'],['Documentos y garantías','doc'],['Reclamos y solicitudes','chat'],['Entrega de mi apartamento','key']]
-      :[['Cotizador inteligente','calc'],['Disponibilidad en tiempo real','grid'],['Dashboard de ventas','chart'],['Seguimiento de prospectos','people'],['Reservas y apartados','key'],['Promociones vigentes','tag']];
-    const cl=s.lgCode.length,short=wide&&(typeof window!=='undefined'?window.innerHeight:900)<720;
+    const FE=cli?[['Mi expediente','folder','Toda la información de tu compra en un lugar.'],['Pagos y estado de cuenta','card','Paga en línea y revisa tu saldo al día.'],['Procesos administrativos','tasks','Sigue cada trámite paso a paso.'],['Documentos y garantías','doc','Descarga contratos, planos y garantías.'],['Reclamos y solicitudes','chat','Reporta y da seguimiento a tus casos.'],['Entrega de mi apartamento','key','Agenda y prepara la entrega de tu hogar.']]
+      :[['Cotizador inteligente','calc','Crea cotizaciones en segundos.'],['Disponibilidad en tiempo real','grid','Consulta unidades libres por torre y nivel.'],['Dashboard de ventas','chart','Mide tus metas y resultados.'],['Seguimiento de prospectos','people','Organiza a tus clientes y próximos pasos.'],['Reservas y apartados','key','Aparta unidades al instante.'],['Promociones vigentes','tag','Ofrece siempre las condiciones del mes.']];
+    const fi=s.lgFi||0,cl=s.lgCode.length,short=wide&&(typeof window!=='undefined'?window.innerHeight:900)<720;
     return{lgHdrIcon:!desk,openLogin:this.openLg(),closeLogin:()=>set({login:false}),
       lgOp:open?1:0,lgPE:open?'auto':'none',
       lgSh:!wide?{l:'0',r:'0',top:'auto',bot:'0',m:'0',w:'auto',h:'auto',maxW:'none',maxH:'calc(100% - 36px)',rad:'30px 30px 0 0',t:open?'translateY(0%)':'translateY(105%)',op:1,pe:'auto'}
         :{l:'0',r:'0',top:'0',bot:'0',m:'auto',w:'calc(100% - 64px)',h:'min(660px, calc(100vh - 64px))',maxW:desk?'1000px':'760px',maxH:'calc(100vh - 64px)',rad:'28px',t:open?'none':'translateY(24px) scale(.97)',op:open?1:0,pe:open?'auto':'none'},
-      lgL:{dir:wide?'row':'column',visFlex:wide?(desk?'0 0 46%':'0 0 40%'):'0 0 196px',formPad:short?'52px 32px 24px':desk?'56px 56px 40px':wide?'52px 32px 32px':'24px 20px 34px',visPad:desk?'36px':wide?'28px 24px':'18px 20px 20px',
-        grad:wide?'linear-gradient(180deg, rgba(2,44,42,0) 22%, rgba(2,44,42,.88) 58%, rgba(2,44,42,.97) 100%)':'linear-gradient(180deg, rgba(2,44,42,0) 12%, rgba(2,44,42,.92) 68%, rgba(2,44,42,.98) 100%)',
-        titleFs:desk?'30px':wide?'24px':'22px',feat:wide?'grid':'none',featCols:desk||short?'repeat(2,minmax(0,1fr))':'minmax(0,1fr)',desc:short?'none':'block',featGap:short?'8px 10px':'10px 14px',featTop:short?'4px':'12px',featPad:short?'12px':'18px',featFs:short?'13px':'14px',logo:wide?'block':'none',handle:wide?'none':'flex',closeBg:wide?'#E6EDF0':'rgba(255,255,255,.92)',h1:wide?'28px':'24px',just:wide?'safe center':'flex-start'},
+      lgL:{dir:wide?'row':'column',visFlex:wide?(desk?'0 0 46%':'0 0 40%'):'0 0 0px',visTxt:wide?'flex':'none',formPad:short?'52px 32px 24px':desk?'56px 56px 40px':wide?'52px 32px 32px':'60px 16px 28px',visPad:desk?'36px':wide?'28px 24px':'18px 20px 20px',
+        grad:wide?'linear-gradient(180deg, rgba(2,44,42,0) 22%, rgba(2,44,42,.88) 58%, rgba(2,44,42,.97) 100%)':'linear-gradient(180deg, rgba(2,44,42,.45) 0%, rgba(2,44,42,0) 45%)',
+        titleFs:desk?'30px':wide?'24px':'22px',feat:wide?'grid':'none',featCols:desk||short?'repeat(2,minmax(0,1fr))':'minmax(0,1fr)',desc:short?'none':'block',featGap:short?'8px 10px':'10px 14px',featTop:short?'4px':'12px',featPad:short?'12px':'18px',featFs:short?'13px':'14px',logo:wide?'block':'none',handle:wide?'none':'flex',closeBg:'#E6EDF0',mHandle:wide?'none':'flex',h1:wide?'28px':'24px',just:wide?'safe center':'flex-start'},
       lgImgC:R('lg_cli','img-opt/2023_09_P14-02-sala.webp'),lgImgA:R('lg_ase','img-opt/2025_09_PPOL-Coworking.webp'),
       lgOpC:cli?1:0,lgOpA:cli?0:1,lgScC:cli?'scale(1)':'scale(1.08)',lgScA:cli?'scale(1.08)':'scale(1)',
       lgKicker:cli?'PORTAL DIGITAL PARA CLIENTES':'PORTAL DE ASESORES COMERCIALES',
       lgTitle:cli?'Tu vivienda, de la firma a la entrega':'Cotiza y cierra ventas desde un solo lugar',
       lgDesc:cli?'Consulta tu expediente, realiza pagos y da seguimiento a cada proceso de tu apartamento.':'Disponibilidad en tiempo real, cotizaciones al instante y el seguimiento de tus clientes.',
-      lgFeats:FE.map(([l,g])=>({label:l,icon:ic(ICONS[g],18)})),
-      lgKnob:cli?'translateX(0%)':'translateX(100%)',lgCliFg:cli?'#fff':'#337184',lgAseFg:cli?'#337184':'#fff',lgSetCli:()=>set({lgRole:'cli'}),lgSetAse:()=>set({lgRole:'ase'}),
+      lgFeats:FE.map(([l,g])=>({label:l,icon:ic(ICONS[g],18)})),lgMob:!wide,
+      lgSlides:FE.map(([l,g,d],i)=>({label:l,desc:d,icon:ic(ICONS[g],22),op:i===fi?1:0,t:i===fi?'translateY(0)':(i<fi?'translateY(-10px)':'translateY(10px)')})),
+      lgDots:FE.map((_,i)=>({w:i===fi?'18px':'6px',bg:i===fi?'#2DB3A6':'rgba(255,255,255,.3)',go:()=>{this._lgTap=Date.now();set({lgFi:i});}})),
+      lgNext:()=>{this._lgTap=Date.now();set({lgFi:(fi+1)%6});},
+      lgKnob:cli?'translateX(0%)':'translateX(100%)',lgCliFg:cli?'#fff':'#337184',lgAseFg:cli?'#337184':'#fff',lgSetCli:()=>set({lgRole:'cli',lgFi:0}),lgSetAse:()=>set({lgRole:'ase',lgFi:0}),
       lgIsLogin:st==='login',lgIsForgot:st==='forgot',lgIsCode:st==='code',lgIsReset:st==='reset',lgIsDone:st==='done',lgIsOk:st==='ok',
       lgEmail:s.lgEmail,lgPass:s.lgPass,onLgEmail:e=>set({lgEmail:e.target.value}),onLgPass:e=>set({lgPass:e.target.value}),
       lgPassType:s.lgShow?'text':'password',lgShowTxt:s.lgShow?'Ocultar':'Ver',lgToggleShow:()=>set({lgShow:!s.lgShow}),
