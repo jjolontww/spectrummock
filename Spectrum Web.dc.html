@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <script src="./support.js"></script>
 <meta name="ext-resource-dependency" content="img-opt/2023_09_torre02-2.webp" data-resource-id="img0">
 <meta name="ext-resource-dependency" content="img-opt/2023_09_fachada-sur.webp" data-resource-id="img1">
@@ -136,6 +135,8 @@
 <meta name="ext-resource-dependency" content="img-opt/prog-sost-cta.webp" data-resource-id="pg_prog-sost-cta">
 <meta name="ext-resource-dependency" content="img-opt/prog-conv.webp" data-resource-id="pg_prog-conv">
 <meta name="ext-resource-dependency" content="img-opt/prog-conv-cta.webp" data-resource-id="pg_prog-conv-cta">
+<meta name="ext-resource-dependency" content="img-opt/2023_09_P14-02-sala.webp" data-resource-id="lg_cli">
+<meta name="ext-resource-dependency" content="img-opt/2025_09_PPOL-Coworking.webp" data-resource-id="lg_ase">
 </head>
 <body>
 <x-dc>
@@ -189,7 +190,10 @@ input{font-family:inherit}
     <span style="position:relative; text-align:center; font-size:13px; font-weight:800; padding:7px 0; color:{{ usdFg }}; transition:color .25s">$ USD</span>
   </div>
   <sc-if value="{{ L.desk }}" hint-placeholder-val="{{ false }}">
-    <button onClick="{{ openDiscover }}" style="border:0; height:40px; padding:0 18px; border-radius:99px; background:#002E3D; color:#fff; font-weight:800; font-size:14px; transition:transform .15s, background .2s; min-height:40px; flex-shrink:0" style-hover="background:#004D65" style-active="transform:scale(.95)">Descubre tu proyecto ideal</button>
+    <button onClick="{{ openLogin }}" style="border:0; height:40px; padding:0 18px 0 14px; border-radius:99px; background:#002E3D; color:#fff; font-weight:800; font-size:14px; display:flex; align-items:center; gap:8px; transition:transform .15s, background .2s; min-height:40px; flex-shrink:0" style-hover="background:#004D65" style-active="transform:scale(.95)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>Iniciar sesión</button>
+  </sc-if>
+  <sc-if value="{{ lgHdrIcon }}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{ openLogin }}" aria-label="Iniciar sesión" title="Iniciar sesión" style="width:34px; height:34px; flex:0 0 34px; border-radius:50%; border:0; background:#002E3D; color:#fff; display:flex; align-items:center; justify-content:center; padding:0; transition:background .2s, transform .2s; min-height:34px" style-hover="background:#004D65" style-active="transform:scale(.9)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg></button>
   </sc-if>
   </div>
 </div>
@@ -1514,7 +1518,7 @@ input{font-family:inherit}
         <span style="margin-top:4px; align-self:flex-start; display:flex; align-items:center; gap:6px; background:#0D9084; color:#fff; font-weight:800; font-size:14px; height:36px; padding:0 14px; border-radius:99px; white-space:nowrap">Empezar<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
       </div>
     </div>
-    <div style="display:{{ L.msWrap }}; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px 18px; align-self:center; align-items:start">
+    <div style="display:{{ L.msWrap }}; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px 18px; align-self:center; align-items:start">
     <sc-for list="{{ menuSections }}" as="sec" hint-placeholder-count="3">
       <div style="display:flex; flex-direction:column; gap:{{ L.msGap }}; align-self:{{ L.msAlign }}">
         <span style="font-size:11px; letter-spacing:1.4px; font-weight:800; color:#337184; padding:6px 6px 6px">{{ sec.title }}</span>
@@ -1536,6 +1540,162 @@ input{font-family:inherit}
     <a href="tel:+50222081111" style="padding:{{ L.mfBtnPad }}; height:{{ L.mfH }}; border-radius:99px; border:1.5px solid #0D9084; color:#0D9084; font-weight:800; font-size:15px; display:flex; align-items:center; justify-content:center; white-space:nowrap; min-width:0; min-height:{{ L.mfH }}; flex-shrink:0">Llámanos</a>
     <button onClick="{{ menuQuote }}" style="padding:{{ L.mfBtnPad }}; height:{{ L.mfH }}; border:0; border-radius:99px; background:#0D9084; color:#fff; font-weight:800; font-size:15px; white-space:nowrap; min-width:0; min-height:{{ L.mfH }}; flex-shrink:0" style-active="transform:scale(.97)">Cotiza tu vivienda ›</button>
     </div>
+  </div>
+</div>
+
+<!-- Login -->
+<div onClick="{{ closeLogin }}" style="position:fixed; inset:0; z-index:96; background:rgba(0,46,61,.55); opacity:{{ lgOp }}; pointer-events:{{ lgPE }}; transition:opacity .3s"></div>
+<div data-screen-label="Login" style="position:fixed; left:{{ lgSh.l }}; right:{{ lgSh.r }}; top:{{ lgSh.top }}; bottom:{{ lgSh.bot }}; margin:{{ lgSh.m }}; width:{{ lgSh.w }}; height:{{ lgSh.h }}; max-width:{{ lgSh.maxW }}; max-height:{{ lgSh.maxH }}; z-index:97; background:#fff; border-radius:{{ lgSh.rad }}; overflow:hidden; box-shadow:0 30px 70px -20px rgba(0,46,61,.5); transform:{{ lgSh.t }}; opacity:{{ lgSh.op }}; pointer-events:{{ lgSh.pe }}; transition:transform .45s cubic-bezier(.2,.9,.25,1), opacity .3s; display:flex; flex-direction:{{ lgL.dir }}">
+  <button type="button" onClick="{{ closeLogin }}" aria-label="Cerrar" style="position:absolute; top:14px; right:14px; z-index:5; width:36px; height:36px; border:0; border-radius:50%; background:{{ lgL.closeBg }}; color:#002E3D; font-size:18px; min-height:36px; flex-shrink:0">×</button>
+  <div style="position:relative; flex:{{ lgL.visFlex }}; overflow:hidden; background:#002E3D; color:#fff">
+    <img draggable="false" src="{{ lgImgC }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:{{ lgOpC }}; transform:{{ lgScC }}; transition:opacity .6s ease, transform 1.4s cubic-bezier(.2,.8,.2,1)">
+    <img draggable="false" src="{{ lgImgA }}" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; opacity:{{ lgOpA }}; transform:{{ lgScA }}; transition:opacity .6s ease, transform 1.4s cubic-bezier(.2,.8,.2,1)">
+    <div style="position:absolute; inset:0; background:{{ lgL.grad }}"></div>
+    <div style="position:absolute; top:8px; left:0; right:0; display:{{ lgL.handle }}; justify-content:center"><span style="width:40px; height:5px; border-radius:5px; background:rgba(255,255,255,.7)"></span></div>
+    <div style="position:relative; height:100%; box-sizing:border-box; padding:{{ lgL.visPad }}; display:flex; flex-direction:column; justify-content:space-between; gap:20px">
+      <img src="logo-spectrum-white.svg" alt="Spectrum" style="height:24px; width:auto; align-self:flex-start; display:{{ lgL.logo }}">
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto">
+        <span style="font-size:11px; letter-spacing:1.4px; font-weight:800; color:#2DB3A6">{{ lgKicker }}</span>
+        <span style="font-size:{{ lgL.titleFs }}; font-weight:800; line-height:1.1; letter-spacing:-.4px; text-wrap:balance; text-shadow:0 1px 12px rgba(0,46,61,.3)">{{ lgTitle }}</span>
+        <span style="display:{{ lgL.desc }}; font-size:14px; font-weight:600; line-height:1.4; color:#fff; text-wrap:pretty; text-shadow:0 1px 8px rgba(0,46,61,.3)">{{ lgDesc }}</span>
+        <div style="display:{{ lgL.feat }}; grid-template-columns:{{ lgL.featCols }}; gap:{{ lgL.featGap }}; margin-top:{{ lgL.featTop }}; padding-top:{{ lgL.featPad }}; border-top:1px solid rgba(255,255,255,.35)">
+          <sc-for list="{{ lgFeats }}" as="ft" hint-placeholder-count="6">
+            <div style="display:flex; align-items:center; gap:10px; min-width:0">
+              <span style="width:34px; height:34px; flex:0 0 34px; border-radius:10px; background:rgba(255,255,255,.14); color:#2DB3A6; display:flex; align-items:center; justify-content:center">{{ ft.icon }}</span>
+              <span style="font-size:{{ lgL.featFs }}; font-weight:700; line-height:1.25">{{ ft.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="flex:1 1 auto; min-height:0; min-width:0; overflow-y:auto; scrollbar-width:none; padding:{{ lgL.formPad }}; box-sizing:border-box; display:flex; flex-direction:column; justify-content:{{ lgL.just }}">
+    <sc-if value="{{ lgIsLogin }}" hint-placeholder-val="{{ true }}">
+    <form onSubmit="{{ lgSubmit }}" style="display:flex; flex-direction:column; gap:18px; width:100%; max-width:400px; margin:0 auto">
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <span style="font-size:{{ lgL.h1 }}; font-weight:800; letter-spacing:-.5px; line-height:1.1">Iniciar sesión</span>
+        <span style="font-size:15px; font-weight:600; color:#337184; line-height:1.4">Accede con el correo registrado en Spectrum.</span>
+      </div>
+      <div role="tablist" style="position:relative; display:grid; grid-template-columns:1fr 1fr; background:#E7F4F3; border-radius:99px; padding:4px">
+        <span style="position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); border-radius:99px; background:#002E3D; transform:{{ lgKnob }}; transition:transform .4s cubic-bezier(.3,1.3,.5,1)"></span>
+        <button type="button" role="tab" onClick="{{ lgSetCli }}" style="position:relative; border:0; background:transparent; height:44px; border-radius:99px; font-size:15px; font-weight:800; color:{{ lgCliFg }}; transition:color .25s; min-height:44px">Soy cliente</button>
+        <button type="button" role="tab" onClick="{{ lgSetAse }}" style="position:relative; border:0; background:transparent; height:44px; border-radius:99px; font-size:15px; font-weight:800; color:{{ lgAseFg }}; transition:color .25s; min-height:44px">Soy asesor</button>
+      </div>
+      <label style="display:flex; flex-direction:column; gap:8px">
+        <span style="font-size:14px; font-weight:800; color:#002E3D">Correo electrónico</span>
+        <input type="email" autocomplete="email" value="{{ lgEmail }}" onChange="{{ onLgEmail }}" placeholder="tu@correo.com" style="width:100%; box-sizing:border-box; height:52px; border:1.5px solid #CCDBE0; border-radius:14px; padding:0 16px; font-size:16px; font-weight:600; color:#002E3D; background:#fff; outline:none; transition:border-color .2s, box-shadow .2s; font-family:inherit" style-focus="border-color:#0D9084; box-shadow:0 0 0 4px rgba(13,144,132,.12)">
+      </label>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px">
+          <span style="font-size:14px; font-weight:800; color:#002E3D">Contraseña</span>
+          <button type="button" onClick="{{ lgForgot }}" style="border:0; background:transparent; padding:0; font-size:14px; font-weight:700; color:#0D9084" style-hover="color:#002E3D">¿Olvidaste tu contraseña?</button>
+        </div>
+        <div style="position:relative">
+          <input type="{{ lgPassType }}" autocomplete="current-password" value="{{ lgPass }}" onChange="{{ onLgPass }}" placeholder="••••••••" style="width:100%; box-sizing:border-box; height:52px; border:1.5px solid #CCDBE0; border-radius:14px; padding:0 16px; font-size:16px; font-weight:600; color:#002E3D; background:#fff; outline:none; transition:border-color .2s, box-shadow .2s; font-family:inherit; padding-right:84px" style-focus="border-color:#0D9084; box-shadow:0 0 0 4px rgba(13,144,132,.12)">
+          <button type="button" onClick="{{ lgToggleShow }}" style="position:absolute; right:6px; top:6px; height:40px; padding:0 12px; border:0; border-radius:10px; background:#E7F4F3; color:#0A736A; font-size:13px; font-weight:800; min-height:40px">{{ lgShowTxt }}</button>
+        </div>
+      </div>
+      <button type="submit" style="width:100%; height:54px; border:0; border-radius:99px; background:{{ lgBtn.bg }}; color:#fff; font-weight:800; font-size:16px; cursor:{{ lgBtn.cur }}; transition:background .25s, transform .15s; min-height:54px; flex-shrink:0" style-active="transform:scale(.97)">{{ lgCta }}</button>
+      <sc-if value="{{ lgHelpCli }}" hint-placeholder-val="{{ true }}">
+        <span style="font-size:14px; font-weight:600; color:#337184; line-height:1.45; text-align:center; text-wrap:pretty">Tu acceso se activa al firmar tu promesa de compraventa. <a href="{{ lgHelpHref }}" target="_blank" style="font-weight:800">¿No lo has recibido?</a></span>
+      </sc-if>
+      <sc-if value="{{ lgHelpAse }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:14px; font-weight:600; color:#337184; line-height:1.45; text-align:center; text-wrap:pretty">Acceso exclusivo para el equipo comercial de Spectrum. Si tienes problemas, contacta a tu coordinador.</span>
+      </sc-if>
+    </form>
+    </sc-if>
+    <sc-if value="{{ lgIsForgot }}" hint-placeholder-val="{{ false }}">
+    <form onSubmit="{{ lgSend }}" style="display:flex; flex-direction:column; gap:20px; width:100%; max-width:400px; margin:0 auto">
+      <div style="display:flex; align-items:center; gap:12px">
+        <button type="button" onClick="{{ lgBack }}" aria-label="Atrás" style="border:0; background:#E6EDF0; width:36px; height:36px; border-radius:50%; font-size:18px; font-weight:700; color:#002E3D; min-height:36px; flex-shrink:0">‹</button>
+        <div style="flex:1; display:flex; flex-direction:column; gap:6px; max-width:180px">
+          <span style="font-size:13px; font-weight:700; color:#337184">{{ lgStepTxt }}</span>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px"><sc-for list="{{ lgBars }}" as="b" hint-placeholder-count="3"><span style="height:4px; border-radius:4px; background:{{ b.bg }}; transition:background .3s"></span></sc-for></div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <span style="font-size:{{ lgL.h1 }}; font-weight:800; letter-spacing:-.5px; line-height:1.1">Recupera tu contraseña</span>
+        <span style="font-size:15px; font-weight:600; color:#337184; line-height:1.4">Te enviaremos un código de 6 dígitos para crear una nueva.</span>
+      </div>
+      <label style="display:flex; flex-direction:column; gap:8px">
+        <span style="font-size:14px; font-weight:800; color:#002E3D">Correo electrónico</span>
+        <input type="email" autocomplete="email" value="{{ lgEmail }}" onChange="{{ onLgEmail }}" placeholder="tu@correo.com" style="width:100%; box-sizing:border-box; height:52px; border:1.5px solid #CCDBE0; border-radius:14px; padding:0 16px; font-size:16px; font-weight:600; color:#002E3D; background:#fff; outline:none; transition:border-color .2s, box-shadow .2s; font-family:inherit" style-focus="border-color:#0D9084; box-shadow:0 0 0 4px rgba(13,144,132,.12)">
+      </label>
+      <button type="submit" style="width:100%; height:54px; border:0; border-radius:99px; background:{{ lgSendBtn.bg }}; color:#fff; font-weight:800; font-size:16px; cursor:{{ lgSendBtn.cur }}; transition:background .25s, transform .15s; min-height:54px; flex-shrink:0" style-active="transform:scale(.97)">Enviar código</button>
+      <button type="button" onClick="{{ lgBackLogin }}" style="border:0; background:transparent; padding:0; font-size:14px; font-weight:800; color:#0D9084; align-self:center" style-hover="color:#002E3D">Volver a iniciar sesión</button>
+    </form>
+    </sc-if>
+    <sc-if value="{{ lgIsCode }}" hint-placeholder-val="{{ false }}">
+    <form onSubmit="{{ lgVerify }}" style="display:flex; flex-direction:column; gap:20px; width:100%; max-width:400px; margin:0 auto">
+      <div style="display:flex; align-items:center; gap:12px">
+        <button type="button" onClick="{{ lgBack }}" aria-label="Atrás" style="border:0; background:#E6EDF0; width:36px; height:36px; border-radius:50%; font-size:18px; font-weight:700; color:#002E3D; min-height:36px; flex-shrink:0">‹</button>
+        <div style="flex:1; display:flex; flex-direction:column; gap:6px; max-width:180px">
+          <span style="font-size:13px; font-weight:700; color:#337184">{{ lgStepTxt }}</span>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px"><sc-for list="{{ lgBars }}" as="b" hint-placeholder-count="3"><span style="height:4px; border-radius:4px; background:{{ b.bg }}; transition:background .3s"></span></sc-for></div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <span style="font-size:{{ lgL.h1 }}; font-weight:800; letter-spacing:-.5px; line-height:1.1">Revisa tu correo</span>
+        <span style="font-size:15px; font-weight:600; color:#337184; line-height:1.4; overflow-wrap:anywhere">Ingresa el código que enviamos a <strong style="color:#002E3D">{{ lgEmailShow }}</strong></span>
+      </div>
+      <label style="position:relative; display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:8px; cursor:text">
+        <sc-for list="{{ lgBoxes }}" as="bx" hint-placeholder-count="6">
+          <span style="height:58px; border-radius:14px; border:1.5px solid {{ bx.bd }}; box-shadow:{{ bx.sh }}; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; transition:border-color .2s, box-shadow .2s">{{ bx.d }}</span>
+        </sc-for>
+        <input inputmode="numeric" autocomplete="one-time-code" aria-label="Código de verificación" value="{{ lgCode }}" onChange="{{ onLgCode }}" onFocus="{{ lgCodeFocus }}" onBlur="{{ lgCodeBlur }}" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; border:0; font-size:16px; color:transparent; background:transparent; caret-color:transparent">
+      </label>
+      <button type="submit" style="width:100%; height:54px; border:0; border-radius:99px; background:{{ lgVerifyBtn.bg }}; color:#fff; font-weight:800; font-size:16px; cursor:{{ lgVerifyBtn.cur }}; transition:background .25s, transform .15s; min-height:54px; flex-shrink:0" style-active="transform:scale(.97)">Verificar código</button>
+      <div style="display:flex; justify-content:center; align-items:center; gap:6px; font-size:14px; font-weight:600; color:#337184">¿No te llegó?<button type="button" onClick="{{ lgResend }}" style="border:0; background:transparent; padding:0; font-size:14px; font-weight:800; color:#0D9084">{{ lgResendTxt }}</button></div>
+    </form>
+    </sc-if>
+    <sc-if value="{{ lgIsReset }}" hint-placeholder-val="{{ false }}">
+    <form onSubmit="{{ lgSave }}" style="display:flex; flex-direction:column; gap:18px; width:100%; max-width:400px; margin:0 auto">
+      <div style="display:flex; align-items:center; gap:12px">
+        <button type="button" onClick="{{ lgBack }}" aria-label="Atrás" style="border:0; background:#E6EDF0; width:36px; height:36px; border-radius:50%; font-size:18px; font-weight:700; color:#002E3D; min-height:36px; flex-shrink:0">‹</button>
+        <div style="flex:1; display:flex; flex-direction:column; gap:6px; max-width:180px">
+          <span style="font-size:13px; font-weight:700; color:#337184">{{ lgStepTxt }}</span>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px"><sc-for list="{{ lgBars }}" as="b" hint-placeholder-count="3"><span style="height:4px; border-radius:4px; background:{{ b.bg }}; transition:background .3s"></span></sc-for></div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px">
+        <span style="font-size:{{ lgL.h1 }}; font-weight:800; letter-spacing:-.5px; line-height:1.1">Crea tu nueva contraseña</span>
+        <span style="font-size:15px; font-weight:600; color:#337184; line-height:1.4">Úsala para entrar a tu portal a partir de ahora.</span>
+      </div>
+      <label style="display:flex; flex-direction:column; gap:8px">
+        <span style="font-size:14px; font-weight:800; color:#002E3D">Nueva contraseña</span>
+        <input type="password" autocomplete="new-password" value="{{ lgN1 }}" onChange="{{ onLgN1 }}" style="width:100%; box-sizing:border-box; height:52px; border:1.5px solid #CCDBE0; border-radius:14px; padding:0 16px; font-size:16px; font-weight:600; color:#002E3D; background:#fff; outline:none; transition:border-color .2s, box-shadow .2s; font-family:inherit" style-focus="border-color:#0D9084; box-shadow:0 0 0 4px rgba(13,144,132,.12)">
+      </label>
+      <label style="display:flex; flex-direction:column; gap:8px">
+        <span style="font-size:14px; font-weight:800; color:#002E3D">Confirma tu contraseña</span>
+        <input type="password" autocomplete="new-password" value="{{ lgN2 }}" onChange="{{ onLgN2 }}" style="width:100%; box-sizing:border-box; height:52px; border:1.5px solid #CCDBE0; border-radius:14px; padding:0 16px; font-size:16px; font-weight:600; color:#002E3D; background:#fff; outline:none; transition:border-color .2s, box-shadow .2s; font-family:inherit" style-focus="border-color:#0D9084; box-shadow:0 0 0 4px rgba(13,144,132,.12)">
+      </label>
+      <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 12px">
+        <sc-for list="{{ lgRules }}" as="ru" hint-placeholder-count="4">
+          <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:{{ ru.fg }}; transition:color .2s">
+            <span style="width:18px; height:18px; flex:0 0 18px; border-radius:50%; background:{{ ru.bg }}; color:#fff; display:flex; align-items:center; justify-content:center; transition:background .2s"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{ ru.ck }}"><path d="M5 12l5 5L20 7"></path></svg></span>{{ ru.t }}
+          </div>
+        </sc-for>
+      </div>
+      <button type="submit" style="width:100%; height:54px; border:0; border-radius:99px; background:{{ lgSaveBtn.bg }}; color:#fff; font-weight:800; font-size:16px; cursor:{{ lgSaveBtn.cur }}; transition:background .25s, transform .15s; min-height:54px; flex-shrink:0" style-active="transform:scale(.97)">Guardar contraseña</button>
+    </form>
+    </sc-if>
+    <sc-if value="{{ lgIsDone }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; width:100%; max-width:400px; margin:0 auto; padding:12px 0">
+      <span style="width:72px; height:72px; border-radius:50%; background:#E7F4F3; color:#0D9084; display:flex; align-items:center; justify-content:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>
+      <span style="font-size:{{ lgL.h1 }}; font-weight:800; letter-spacing:-.5px; line-height:1.1">Contraseña actualizada</span>
+      <span style="font-size:15px; font-weight:600; color:#337184; line-height:1.4">Ya puedes iniciar sesión con tu nueva contraseña.</span>
+      <button type="button" onClick="{{ lgBackLogin }}" style="margin-top:8px; width:100%; height:54px; border:0; border-radius:99px; background:#0D9084; color:#fff; font-weight:800; font-size:16px; min-height:54px" style-active="transform:scale(.97)">Iniciar sesión</button>
+    </div>
+    </sc-if>
+    <sc-if value="{{ lgIsOk }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; width:100%; max-width:400px; margin:0 auto; padding:12px 0">
+      <span style="width:72px; height:72px; border-radius:50%; background:#002E3D; color:#86C8C2; display:flex; align-items:center; justify-content:center"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg></span>
+      <span style="font-size:{{ lgL.h1 }}; font-weight:800; letter-spacing:-.5px; line-height:1.1">¡Hola de nuevo!</span>
+      <span style="font-size:15px; font-weight:600; color:#337184; line-height:1.4">{{ lgOkSub }}</span>
+      <div style="display:flex; gap:6px; padding:6px 0"><span style="width:8px; height:8px; border-radius:50%; background:#0D9084; animation:spDot 1.2s infinite"></span><span style="width:8px; height:8px; border-radius:50%; background:#0D9084; animation:spDot 1.2s .15s infinite"></span><span style="width:8px; height:8px; border-radius:50%; background:#0D9084; animation:spDot 1.2s .3s infinite"></span></div>
+      <button type="button" onClick="{{ closeLogin }}" style="border:0; background:transparent; padding:0; font-size:14px; font-weight:800; color:#0D9084">Volver al sitio</button>
+    </div>
+    </sc-if>
   </div>
 </div>
 
@@ -1890,11 +2050,12 @@ const COUNTRY=iso=>{const c=COUNTRIES.find(x=>x[0]===iso)||COUNTRIES[0];return{i
 const ic=(parts,size)=>React.createElement('svg',{width:size||22,height:size||22,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.9,strokeLinecap:'round',strokeLinejoin:'round',style:{display:'block'}},...parts.map((x,i)=>typeof x==='string'?React.createElement('path',{key:i,d:x}):React.createElement(x[0],{key:i,...x[1]})));
 const dot=(cx,cy)=>['circle',{cx,cy,r:1.7,fill:'currentColor',stroke:'none'}];
 const ICONS={spark:['M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z','M19 16v4','M17 18h4'],home:['M3 10.5 12 3l9 7.5','M5 9v11h5v-6h4v6h5V9'],building:[['rect',{x:4,y:3,width:10,height:18,rx:1.5}],'M14 9h5a1 1 0 0 1 1 1v11h-6','M8 7h2','M8 11h2','M8 15h2'],compare:['M4 8h14','M15 4.5 18.5 8 15 11.5','M20 16H6','M9 12.5 5.5 16 9 19.5'],calc:[['rect',{x:5,y:3,width:14,height:18,rx:2.5}],'M8.5 7.5h7',dot(9,12),dot(12,12),dot(15,12),dot(9,16),dot(12,16),dot(15,16)],grid:[dot(5,5),dot(12,5),dot(19,5),dot(5,12),dot(12,12),dot(19,12),dot(5,19),dot(12,19),dot(19,19)],info:[['circle',{cx:12,cy:12,r:9}],'M12 11v5',dot(12,7.8)],plus:[['circle',{cx:12,cy:12,r:9}],'M12 8v8','M8 12h8'],leaf:['M5 19c0-8 5.5-14 15-14 0 9.5-6 15-14 15','M5 19l7-7'],book:['M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z','M5 19.5A1.5 1.5 0 0 0 6.5 21H19','M9 7h6'],chart:['M4 20h16','M7 16v-5','M12 16V6','M17 16v-8'],people:[['circle',{cx:9,cy:8,r:3.2}],'M3 20a6 6 0 0 1 12 0',['circle',{cx:17,cy:9,r:2.5}],'M16 14.2a4.8 4.8 0 0 1 5 4.8'],pen:['M4 20h4L19 9l-4-4L4 16z','M13.5 6.5l4 4'],chat:['M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4A1.5 1.5 0 0 1 4 14.5z','M8.5 9h7','M8.5 12h4'],close:['M6 6l12 12','M18 6 6 18'],chevDown:['M6 9l6 6 6-6'],search:[['circle',{cx:11,cy:11,r:6.5}],'M20 20l-4.2-4.2'],check:['M5 12.5l4.5 4.5L19 7'],pin:['M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z',['circle',{cx:12,cy:10,r:2.3}]],play:[['path',{d:'M8 5.5v13l10.5-6.5z',fill:'currentColor'}]],chevL:['M15 5l-7 7 7 7'],chevR:['M9 5l7 7-7 7'],plan:[['rect',{x:3.5,y:3.5,width:17,height:17,rx:1.5}],'M3.5 11h7V3.5','M14 11h6.5','M10.5 15v5.5','M14 11v3.5h6.5'],bed:['M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7','M3 15h18','M3 18v2','M21 18v2','M7 9V7a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2'],bath:['M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z','M6 12V6a2 2 0 0 1 2-2h1','M7 19l-1 2','M17 19l1 2'],car:['M5 16v3','M19 16v3','M3.5 16h17v-3.5l-2-5a1.5 1.5 0 0 0-1.4-1H6.9a1.5 1.5 0 0 0-1.4 1l-2 5z','M3.5 12.5h17',dot(7.5,14.5),dot(16.5,14.5)],area:['M4 9V4h5','M20 9V4h-5','M4 15v5h5','M20 15v5h-5']};
+Object.assign(ICONS,{user:[['circle',{cx:12,cy:8,r:4}],'M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6'],briefcase:[['rect',{x:3,y:7,width:18,height:13,rx:2}],'M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2','M3 13h18'],folder:['M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'],card:[['rect',{x:2.5,y:5,width:19,height:14,rx:2.5}],'M2.5 10h19','M6 15h4'],tasks:['M10 6h10','M10 12h10','M10 18h10','M3.5 6l1.5 1.5L7.5 5','M3.5 12l1.5 1.5 2.5-2.5','M3.5 18l1.5 1.5 2.5-2.5'],doc:['M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z','M14 3v5h5','M9 13h6','M9 17h4'],chat:['M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12z','M8.5 12h.01','M12 12h.01','M15.5 12h.01'],key:[['circle',{cx:8,cy:15,r:4}],'M11 12l9-9','M17 6l3 3','M15 8l2 2'],tag:['M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z',['circle',{cx:7.5,cy:7.5,r:1.5}]]});
 const DEF_D={ds:0,dUso:null,dWhen:null,dCuota:8000,dBeds:null,dBaths:null,dM2:null,dPri:[],dName:'',dPhone:'',dContact:'WhatsApp',dSent:false};
 
 class Component extends DCLogic {
   loadI18n(){if(window.SpectrumI18n)return Promise.resolve();if(!this._i18nWait){this._i18nWait=new Promise(r=>{let n=0;const t=setInterval(()=>{if(window.SpectrumI18n||++n>40){clearInterval(t);r();}},50);});}return this._i18nWait;if(this._i18nP)return this._i18nP;this._i18nP=new Promise(r=>{const sc=document.createElement('script');sc.src='i18n-en.js';sc.onload=r;sc.onerror=r;document.head.appendChild(sc);});return this._i18nP;}
-  wvRef=React.createRef();state={lang:'es',cmpMode:'proj',cmpM:[],lm:'proj',avT:0,avM:'',avSel:null,avFrom:'list',avPrev:'home',wv:null,wvHid:false,pgVid:null,prog:'sost',pgFaq:0,pgF:{n:'',emp:'',e:'',t:''},pgSent:false,view:this.props.startView??'home',prev:'home',pid:'pp',typo:0,cur:'GTQ',heroI:0,q:'',qFocus:false,f:{...DEF_F},sort:'entrega',filtersOpen:false,compare:[],pop:null,toast:null,acc:0,waMenu:false,quiz:false,qs:0,qP:null,qT:null,qW:null,qPay:null,qSel:null,calcPrice:1100000,eng:10,years:25,menu:false,disc:false,...DEF_D,ctry:'GT',cOpen:false,cQ:'',vw:(typeof window!=='undefined'?window.innerWidth:1280),qBeds:null,qBaths:null,qPark:null,qM2:null,qZones:null,hIdx:0,mSel:0,mBeds:0,lbOpen:false,lbSet:'proj',lbI:0,lbM:0};
+  wvRef=React.createRef();state={lang:'es',login:false,lgRole:'cli',lgStep:'login',lgEmail:'',lgPass:'',lgShow:false,lgCode:'',lgCodeF:false,lgN1:'',lgN2:'',lgResent:false,cmpMode:'proj',cmpM:[],lm:'proj',avT:0,avM:'',avSel:null,avFrom:'list',avPrev:'home',wv:null,wvHid:false,pgVid:null,prog:'sost',pgFaq:0,pgF:{n:'',emp:'',e:'',t:''},pgSent:false,view:this.props.startView??'home',prev:'home',pid:'pp',typo:0,cur:'GTQ',heroI:0,q:'',qFocus:false,f:{...DEF_F},sort:'entrega',filtersOpen:false,compare:[],pop:null,toast:null,acc:0,waMenu:false,quiz:false,qs:0,qP:null,qT:null,qW:null,qPay:null,qSel:null,calcPrice:1100000,eng:10,years:25,menu:false,disc:false,...DEF_D,ctry:'GT',cOpen:false,cQ:'',vw:(typeof window!=='undefined'?window.innerWidth:1280),qBeds:null,qBaths:null,qPark:null,qM2:null,qZones:null,hIdx:0,mSel:0,mBeds:0,lbOpen:false,lbSet:'proj',lbI:0,lbM:0};
   dScore(p){const s=this.state;let sc=0;const why=[];const ty=typos(p);const tyB=ty.filter(t=>t.b===s.dBeds);const cand=tyB.length?tyB:ty;
     const cu=Math.min(...cand.map(t=>t.price*0.9*fac(25)));
     if(cu<=s.dCuota){sc+=25;why.push('Cuota desde '+this.fmt(cu));}else sc+=Math.max(0,25-(cu-s.dCuota)/150);
@@ -2000,6 +2161,44 @@ class Component extends DCLogic {
         fields:[['Nombres','Tu nombre'],['Apellidos','Tus apellidos'],['DPI','0000 00000 0000'],['Correo electrónico','tu@correo.com'],['Teléfono','+502 0000 0000'],['NIT','CF']].map(([l,ph])=>({l,ph}))}:{brand:'',url:'',unit:'',specs:'',price:'',cols:'1fr',steps:[],fields:[]}
     };
   }
+  openLg(role){return()=>this.setState({menu:false,disc:false,login:true,lgRole:role||this.state.lgRole,lgStep:'login',lgPass:'',lgShow:false});}
+  lgVals(wide,desk){const s=this.state,cli=s.lgRole==='cli',st=s.lgStep,open=!!s.login,set=p=>this.setState(p);
+    const emOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.lgEmail.trim()),loginOk=emOk&&s.lgPass.length>=6,n1=s.lgN1;
+    const rules=[['Mínimo 8 caracteres',n1.length>=8],['Una letra mayúscula',/[A-Z]/.test(n1)],['Un número',/\d/.test(n1)],['Las contraseñas coinciden',!!n1&&n1===s.lgN2]],rOk=rules.every(r=>r[1]);
+    const btn=ok=>({bg:ok?'#0D9084':'#B9CDD3',cur:ok?'pointer':'not-allowed'});
+    const FE=cli?[['Mi expediente','folder'],['Pagos y estado de cuenta','card'],['Procesos administrativos','tasks'],['Documentos y garantías','doc'],['Reclamos y solicitudes','chat'],['Entrega de mi apartamento','key']]
+      :[['Cotizador inteligente','calc'],['Disponibilidad en tiempo real','grid'],['Dashboard de ventas','chart'],['Seguimiento de prospectos','people'],['Reservas y apartados','key'],['Promociones vigentes','tag']];
+    const cl=s.lgCode.length,short=wide&&(typeof window!=='undefined'?window.innerHeight:900)<720;
+    return{lgHdrIcon:!desk,openLogin:this.openLg(),closeLogin:()=>set({login:false}),
+      lgOp:open?1:0,lgPE:open?'auto':'none',
+      lgSh:!wide?{l:'0',r:'0',top:'auto',bot:'0',m:'0',w:'auto',h:'auto',maxW:'none',maxH:'calc(100% - 36px)',rad:'30px 30px 0 0',t:open?'translateY(0%)':'translateY(105%)',op:1,pe:'auto'}
+        :{l:'0',r:'0',top:'0',bot:'0',m:'auto',w:'calc(100% - 64px)',h:'min(660px, calc(100vh - 64px))',maxW:desk?'1000px':'760px',maxH:'calc(100vh - 64px)',rad:'28px',t:open?'none':'translateY(24px) scale(.97)',op:open?1:0,pe:open?'auto':'none'},
+      lgL:{dir:wide?'row':'column',visFlex:wide?(desk?'0 0 46%':'0 0 40%'):'0 0 196px',formPad:short?'52px 32px 24px':desk?'56px 56px 40px':wide?'52px 32px 32px':'24px 20px 34px',visPad:desk?'36px':wide?'28px 24px':'18px 20px 20px',
+        grad:wide?'linear-gradient(180deg, rgba(2,44,42,0) 22%, rgba(2,44,42,.88) 58%, rgba(2,44,42,.97) 100%)':'linear-gradient(180deg, rgba(2,44,42,0) 12%, rgba(2,44,42,.92) 68%, rgba(2,44,42,.98) 100%)',
+        titleFs:desk?'30px':wide?'24px':'22px',feat:wide?'grid':'none',featCols:desk||short?'repeat(2,minmax(0,1fr))':'minmax(0,1fr)',desc:short?'none':'block',featGap:short?'8px 10px':'10px 14px',featTop:short?'4px':'12px',featPad:short?'12px':'18px',featFs:short?'13px':'14px',logo:wide?'block':'none',handle:wide?'none':'flex',closeBg:wide?'#E6EDF0':'rgba(255,255,255,.92)',h1:wide?'28px':'24px',just:wide?'safe center':'flex-start'},
+      lgImgC:R('lg_cli','img-opt/2023_09_P14-02-sala.webp'),lgImgA:R('lg_ase','img-opt/2025_09_PPOL-Coworking.webp'),
+      lgOpC:cli?1:0,lgOpA:cli?0:1,lgScC:cli?'scale(1)':'scale(1.08)',lgScA:cli?'scale(1.08)':'scale(1)',
+      lgKicker:cli?'PORTAL DIGITAL PARA CLIENTES':'PORTAL DE ASESORES COMERCIALES',
+      lgTitle:cli?'Tu vivienda, de la firma a la entrega':'Cotiza y cierra ventas desde un solo lugar',
+      lgDesc:cli?'Consulta tu expediente, realiza pagos y da seguimiento a cada proceso de tu apartamento.':'Disponibilidad en tiempo real, cotizaciones al instante y el seguimiento de tus clientes.',
+      lgFeats:FE.map(([l,g])=>({label:l,icon:ic(ICONS[g],18)})),
+      lgKnob:cli?'translateX(0%)':'translateX(100%)',lgCliFg:cli?'#fff':'#337184',lgAseFg:cli?'#337184':'#fff',lgSetCli:()=>set({lgRole:'cli'}),lgSetAse:()=>set({lgRole:'ase'}),
+      lgIsLogin:st==='login',lgIsForgot:st==='forgot',lgIsCode:st==='code',lgIsReset:st==='reset',lgIsDone:st==='done',lgIsOk:st==='ok',
+      lgEmail:s.lgEmail,lgPass:s.lgPass,onLgEmail:e=>set({lgEmail:e.target.value}),onLgPass:e=>set({lgPass:e.target.value}),
+      lgPassType:s.lgShow?'text':'password',lgShowTxt:s.lgShow?'Ocultar':'Ver',lgToggleShow:()=>set({lgShow:!s.lgShow}),
+      lgCta:cli?'Entrar al portal de clientes':'Entrar al portal de asesores',lgBtn:btn(loginOk),lgSubmit:e=>{e.preventDefault();if(loginOk)set({lgStep:'ok'});},
+      lgHelpCli:cli,lgHelpAse:!cli,lgHelpHref:waHref('Hola Spectrum, soy cliente y aún no he recibido mi acceso al portal digital.'),
+      lgForgot:()=>set({lgStep:'forgot'}),lgBack:()=>set({lgStep:{forgot:'login',code:'forgot',reset:'code'}[st]||'login'}),lgBackLogin:()=>set({lgStep:'login'}),
+      lgStepTxt:{forgot:'Paso 1 de 3',code:'Paso 2 de 3',reset:'Paso 3 de 3'}[st]||'',lgBars:[0,1,2].map(i=>({bg:i<=({forgot:0,code:1,reset:2}[st]??-1)?'#0D9084':'#E6EDF0'})),
+      lgSendBtn:btn(emOk),lgSend:e=>{e.preventDefault();if(emOk)set({lgStep:'code',lgCode:'',lgResent:false});},lgEmailShow:s.lgEmail.trim()||'tu correo',
+      lgCode:s.lgCode,onLgCode:e=>set({lgCode:e.target.value.replace(/\D/g,'').slice(0,6)}),lgCodeFocus:()=>set({lgCodeF:true}),lgCodeBlur:()=>set({lgCodeF:false}),
+      lgBoxes:[0,1,2,3,4,5].map(i=>{const act=s.lgCodeF&&i===Math.min(cl,5);return{d:s.lgCode[i]||'',bd:act?'#0D9084':(s.lgCode[i]?'#002E3D':'#CCDBE0'),sh:act?'0 0 0 4px rgba(13,144,132,.15)':'none'};}),
+      lgVerifyBtn:btn(cl===6),lgVerify:e=>{e.preventDefault();if(cl===6)set({lgStep:'reset',lgN1:'',lgN2:''});},
+      lgResend:()=>set({lgResent:true,lgCode:''}),lgResendTxt:s.lgResent?'Código reenviado ✓':'Reenviar código',
+      lgN1:s.lgN1,lgN2:s.lgN2,onLgN1:e=>set({lgN1:e.target.value}),onLgN2:e=>set({lgN2:e.target.value}),
+      lgRules:rules.map(([t,ok])=>({t,fg:ok?'#0A736A':'#5C8794',bg:ok?'#0D9084':'#E6EDF0',ck:ok?1:0})),
+      lgSaveBtn:btn(rOk),lgSave:e=>{e.preventDefault();if(rOk)set({lgStep:'done',lgPass:''});},
+      lgOkSub:cli?'Estamos abriendo tu portal de clientes…':'Estamos abriendo tu portal de asesores…'};}
   go(view,pid){this.setState(s=>({view,prev:s.view==='detail'?s.prev:s.view,pid:pid||s.pid,typo:0,waMenu:false,hIdx:0,mSel:0,mBeds:0,lbOpen:false}));setTimeout(()=>{this.top();if(this.heroRef.current)this.heroRef.current.scrollLeft=0;if(this.mRef.current)this.mRef.current.scrollLeft=0;},0);}
   fmt(n){return this.state.cur==='USD'?'$'+Math.round(n/7.75).toLocaleString('en-US'):'Q'+Math.round(n).toLocaleString('en-US');}
   minCuota(p,beds){const t=typos(p).filter(t=>!beds||t.b===beds);return Math.min(...t.map(t=>t.price*0.9*fac(25)));}
@@ -2211,7 +2410,7 @@ class Component extends DCLogic {
       stickyTop:wide?'63px':(_hid?'0px':'58px'),listCols:desk?'repeat(3,minmax(0,1fr))':wide?'repeat(2,minmax(0,1fr))':'minmax(0,1fr)',listGap:wide?'20px':'16px',padB:wide?'100px':'150px',sideM:desk?'max(48px, calc((100% - 1184px) / 2))':pad,
       dHeroH:desk?'560px':wide?'480px':'410px',dHeroW:wide?'calc(100% - '+(desk?96:64)+'px)':'100%',dHeroMax:wide?'1184px':'none',dHeroM:wide?'12px auto 0':'0',dHeroR:wide?'28px':'0',dHeroBot:wide?'20px':'48px',
       dContM:wide?'0 auto':'-32px 0 0',dContR:wide?'0':'30px 30px 0 0',dContPad:desk?'36px 48px 90px':wide?'28px 32px 130px':'22px 18px 130px',dCols:desk?'minmax(0,1fr) 380px':'minmax(0,1fr)',dGap:desk?'48px':'22px',asideOrder:desk?2:0,asideSticky:desk?'sticky':'static',
-      narrowW:wide?'960px':'none',arrowD:wide?'flex':'none',backPad:desk?'0 16px 0 10px':'0',handle:wide?'none':'flex',menuCols:desk?'232px minmax(0,1fr)':wide?'repeat(4,minmax(0,1fr))':'minmax(0,1fr)',menuPad:desk?'24px 24px 24px':wide?'20px 24px 18px':'10px 16px 16px',menuGap:wide?'8px 18px':'14px 20px',
+      narrowW:wide?'960px':'none',arrowD:wide?'flex':'none',backPad:desk?'0 16px 0 10px':'0',handle:wide?'none':'flex',menuCols:desk?'232px minmax(0,1fr)':wide?'repeat(5,minmax(0,1fr))':'minmax(0,1fr)',menuPad:desk?'24px 24px 24px':wide?'20px 24px 18px':'10px 16px 16px',menuGap:wide?'8px 18px':'14px 20px',
       mbCol:desk?'1 / 2':'1 / -1',mbRow:'auto',msAlign:'start',msWrap:desk?'grid':'contents',msGap:desk?'4px':'0px',mbImgW:desk?'100%':'58%',mbGrad:desk?'linear-gradient(0deg, #002E3D 30%, rgba(0,46,61,.75) 55%, rgba(0,46,61,.15) 100%)':'linear-gradient(90deg, #002E3D 42%, rgba(0,46,61,.88) 58%, rgba(0,46,61,.35) 80%, rgba(0,46,61,.1) 100%)',mbMaxW:desk?'100%':'68%',mbJust:desk?'flex-end':'center',mbMinH:desk?'340px':wide?'96px':'132px',mbRight:desk?'0px':wide?'56px':'0px',mbCloseD:wide?'absolute':'static',
       mrPad:desk?'10px 10px':wide?'7px 8px':'11px 10px',mrIc:desk?'36px':wide?'32px':'40px',mrRad:wide?'10px':'12px',mrFs:desk?'15px':wide?'14px':'16px',mrGap:wide?'10px':'14px',mrChev:wide?'none':'inline',
       mfCols:wide?'auto auto':'1fr 1.3fr',mfJust:wide?'end':'stretch',mfPad:wide?'12px 24px':'12px 16px 34px',mfH:wide?'44px':'52px',mfBtnPad:wide?'0 22px':'0',mfTxt:wide?'flex':'none',fabR:wide?'24px':'16px',fabB:wide?'24px':'104px',sheetW:wide?'560px':'none'};
@@ -2249,7 +2448,8 @@ class Component extends DCLogic {
       {title:'VIVIENDA',rows:[row('Inicio','home',intl('home'),0,'home'),row('Viviendas','building',intl('list'),0,'list'),row('Avances de obra','chart',ext('avances-de-obra/'),1)]},
       {title:'HERRAMIENTAS',rows:[row('Comparador','compare',intl('compare'),0,'compare'),row('Calculadora financiera','calc',intl('calc'),0,'calc'),row('Guía de compra','book',ext('spectrum-te-guia/'),1)]},
       {title:'PROGRAMAS',rows:[row('Spectrum Plus','plus',progGo('plus'),0,'prog:plus'),row('Spectrum Sostenible','leaf',progGo('sost'),0,'prog:sost'),row('Conviviendo','people',progGo('conv'),0,'prog:conv')]},
-      {title:'ACERCA DE',rows:[row('Nosotros','info',ext('nosotros/'),1),row('Blog','pen',ext('blog/'),1)]}];
+      {title:'ACERCA DE',rows:[row('Nosotros','info',ext('nosotros/'),1),row('Blog','pen',ext('blog/'),1)]},
+      {title:'MI CUENTA',rows:[row('Portal de clientes','user',this.openLg('cli'),0),row('Portal de asesores','briefcase',this.openLg('ase'),0)]}];
     // discover
     const sel=(on)=>({bg:on?INK:'#E6EDF0',fg:on?'#fff':INK});
     const ds=s.ds;
@@ -2319,6 +2519,7 @@ class Component extends DCLogic {
       mOp:s.menu?1:0,mPE:s.menu?'auto':'none',mY:s.menu?'0%':'105%',mSh:sheet(s.menu,'88%',false,true),closeMenu:()=>this.setState({menu:false}),menuSections,menuBannerImg:byId('pm').img,
       menuQuote:()=>{this.setState({menu:false});this.openQuiz(null);},
       
+      ...this.lgVals(wide,desk),
       openDiscover:()=>this.setState({menu:false,disc:true,waMenu:false,...DEF_D}),closeDiscover:()=>this.setState({disc:false}),
       dOp:s.disc?1:0,dPE:s.disc?'auto':'none',dY:s.disc?'0%':'105%',dSh:sheet(s.disc,'',true),
       dBack:()=>this.setState(x=>({ds:Math.max(0,x.ds-1),dSent:false})),dBackOp:ds>0?1:.35,
